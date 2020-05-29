@@ -1,7 +1,7 @@
 
 body {
-    /*background-image: url("../img/main-background.jpg");*/
-    /*background-color: #336d13;*/
+    background-image: url("../img/main-background.jpg");
+    background-color: #336d13;
 }
 
 .image-area img {
@@ -14,4 +14,71 @@ body {
 
 #answer-suggestions .answer-suggestion span {
     cursor: pointer;
+}
+
+#levels {
+    background: #cccccc54;
+    max-height: 250px;
+    overflow: auto;
+}
+
+#levels .item {
+    font-size: 31px;
+    font-weight: bold;
+    min-height: 52px;
+    max-width: 53px;
+    border: 1px solid #71c028;
+    border-radius: 5px;
+    background: url(../img/level-background.png) no-repeat center;
+    /*opacity: 0.7;*/
+    padding: 1px;
+    margin: 1px;
+}
+
+#levels .item:before,
+#levels .item:after {
+    content: "";
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    transition: all 0.8s;
+}
+
+#levels .item:hover {
+    cursor: pointer;
+    background: rgba(0, 0, 0, 0.5);
+    color: #ff9c0a!important;
+}
+
+
+#levels .item span {
+    display: block;
+    text-align: center;
+    color: #292f33;
+    background: #fff3;
+}
+
+#loader {
+    position: absolute;
+    top: 25%;
+    left: 25%;
+}
+
+
+
+#question {
+    padding: 5px;
+}
+
+#question #question-image,
+#question #question-answer,
+#question #answer-suggestions,
+#question #check-answer,
+#question #answer-result {
+    background: #ffffffa3;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 5px;
 }
