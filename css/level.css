@@ -1,0 +1,102 @@
+
+#levels {
+    background: #cccccc54;
+    max-height: 550px;
+    overflow: auto;
+    margin: 5px;
+    padding: 5px;
+    color: #ffffff;
+}
+
+#levels .item {
+    text-align: center;
+    font-size: 31px;
+    font-weight: bold;
+    border: 1px solid #71c028;
+    border-radius: 5px;
+    padding: 1px;
+    margin: 1px;
+    min-height: 50px;
+    min-weight: 50px;
+}
+
+#levels .locked-level {
+    background: url(../img/level-background.png) no-repeat center;
+}
+
+#levels .locked-level span {
+    display: none;
+    color: #FFF5FF;
+}
+
+#levels .locked-level-hover span {
+    display: block;
+}
+
+#levels .locked-level {
+    font-size: 24px;
+}
+
+#levels .locked-level-hover {
+    display: block;
+    background: rgba(0, 0, 0, 0.5);
+    font-size: 16px;
+    transition: all 0.7s;
+    transition-timing-function: linear;
+    background: url(../img/key-locked.png) no-repeat center;
+    background-size: auto 45px;
+    /*background-color: #ccc;*/
+}
+
+#levels .past-level:hover,
+#levels .current-level:hover {
+    cursor: pointer;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+#levels .current-level:hover {
+    transition: all 0.1s;
+}
+
+#levels .past-level:hover {
+    transition: all 0.8s;
+}
+
+
+/*#levels .item {*/
+    /*font-size: 31px;*/
+    /*font-weight: bold;*/
+    /*min-height: 52px;*/
+    /*max-width: 53px;*/
+    /*border: 1px solid #71c028;*/
+    /*border-radius: 5px;*/
+    /*background: url(../img/level-background.png) no-repeat center;*/
+    /*!*opacity: 0.7;*!*/
+    /*padding: 1px;*/
+    /*margin: 1px;*/
+/*}*/
+
+/*#levels .item:before,*/
+/*#levels .item:after {*/
+    /*content: "";*/
+    /*position: absolute;*/
+    /*height: 100%;*/
+    /*width: 100%;*/
+    /*top: 0;*/
+    /*left: 0;*/
+    /*transition: all 0.8s;*/
+/*}*/
+
+/*#levels .item:hover {*/
+    /*cursor: pointer;*/
+    /*background: rgba(0, 0, 0, 0.5);*/
+    /*color: #ff9c0a!important;*/
+/*}*/
+
+
+/*#levels .item span {*/
+    /*display: block;*/
+    /*text-align: center;*/
+    /*color: #292f33;*/
+    /*background: #fff3;*/
+/*}*/

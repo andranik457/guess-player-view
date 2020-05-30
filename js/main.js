@@ -5,6 +5,9 @@
 let currentQuestionId = '';
 let pastQuestions = [];
 
+$('#question-image').hide();
+$('#question-answer').hide();
+$('#answer-suggestions').hide();
 $('#answer-result').hide();
 $('#check-answer').hide();
 
@@ -21,7 +24,7 @@ async function appendQuestion(currentLevel) {
     let question = await getQuestion(currentLevel);
 
     currentQuestionId = ''+ question.questionId;
-    pastQuestions.push(currentQuestionId);
+    // pastQuestions.push(currentQuestionId);
 
     $('#question-image')
         .empty()
@@ -29,13 +32,20 @@ async function appendQuestion(currentLevel) {
 
     $('#question-answer')
         .empty()
-        .append('<input type="text" class="form-control" id="answer-input">');
+        .append('<input type="text" class="form-control" id="answer-input" autocomplete="off">');
+
+    $('#question-image').show();
+    $('#question-answer').show();
+    $('#answer-result').hide();
+
 
     // catch answer-input area change event
     $("#answer-input").on("change paste keyup", function() {
         let answer = $(this).val();
 
-        appendSuggest(answer)
+        appendSuggest(answer);
+
+        $('#answer-suggestions').show();
     });
 
 }
@@ -53,9 +63,9 @@ $("#check-answer").on("click", '#submit-answer', async function() {
     let answerResult = '';
     if (questionInfo.answer) {
         answerResult = '<div class="row" id="correct-answer">' +
-                '<div class="col-sm-3"><button type="button" class="btn btn-info">Home</button></div>' +
+                '<div class="col-sm-3"><button type="button" class="btn btn-info" id="give-up">Home</button></div>' +
                 '<div class="col-sm-6"><h3 style="color:green; text-align: center;">Congrats!</h3></div>' +
-                '<div class="col-sm-3"><button type="button" class="btn btn-success float-right">Next Level</button></div>' +
+                '<div class="col-sm-3"><button type="button" class="btn btn-success float-right" id="next-level">Next Level</button></div>' +
             '</div>';
 
         $('#question-image').find('img').attr('src', questionInfo.result.imageUrl);
@@ -63,9 +73,9 @@ $("#check-answer").on("click", '#submit-answer', async function() {
     }
     else {
         answerResult = '<div class="row" id="correct-answer">' +
-            '<div class="col-sm-3"><button type="button" class="btn btn-info">Home</button></div>' +
+            '<div class="col-sm-3"><button type="button" class="btn btn-info" id="give-up">Home</button></div>' +
             '<div class="col-sm-6"><h3 style="color:red; text-align: center;">Incorrect answer!</h3></div>' +
-            '<div class="col-sm-3"><button type="button" class="btn btn-success float-right">Tray again</button></div>' +
+            '<div class="col-sm-3"><button type="button" class="btn btn-success float-right" id="tray-again">Tray again</button></div>' +
             '</div>';
     }
 
@@ -75,7 +85,7 @@ $("#check-answer").on("click", '#submit-answer', async function() {
         .show();
 
     $('#question-answer')
-        .empty()
+        // .empty()
         .hide();
     $('#answer-suggestions')
         .empty()
@@ -195,7 +205,10 @@ async function getQuestion(level) {
     $.ajax({
         url: url,
         global: false,
-        type: 'GET',
+        type: 'POST',
+        data: {
+            pastQuestions: JSON.stringify(pastQuestions)
+        },
         async: false,
         success: function (data) {
             question = data.result;
