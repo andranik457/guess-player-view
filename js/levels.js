@@ -2,6 +2,12 @@
 let levelMax = 150;
 let selectedLevel = 0;
 
+$("#start-game").on("click", 'button', async function() {
+    $('#start-game').empty();
+
+    appendQuestion(selectedLevel);
+});
+
 /**
  *
  */
@@ -26,7 +32,8 @@ $("#answer-result").on("click", '#give-up', async function() {
     $('#answer-result').hide();
     $('#check-answer').hide();
 
-    showLevels();
+    // showLevels();
+    startGame();
 });
 
 $("#answer-result").on("click", '#tray-again', async function() {
@@ -82,3 +89,9 @@ $("#levels").on("mouseenter", ".locked-level", function() {
 $("#levels").on("mouseleave", ".locked-level", function() {
     $( this ).removeClass("locked-level-hover");
 });
+
+function startGame() {
+    $("#start-game")
+        .empty()
+        .append('<div class="col-4 col-sm-4 col-md-2 offset-sm-4 offset-md-5"><button type="button" class="btn btn-light">Start Game</button></div>')
+}

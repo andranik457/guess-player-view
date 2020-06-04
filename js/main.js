@@ -12,7 +12,9 @@ $('#answer-result').hide();
 $('#check-answer').hide();
 
 $( document ).ready(async function() {
-    showLevels();
+    // showLevels();
+
+    startGame();
 });
 
 /**
@@ -63,9 +65,9 @@ $("#check-answer").on("click", '#submit-answer', async function() {
     let answerResult = '';
     if (questionInfo.answer) {
         answerResult = '<div class="row" id="correct-answer">' +
-                '<div class="col-sm-3"><button type="button" class="btn btn-info" id="give-up">Home</button></div>' +
-                '<div class="col-sm-6"><h3 style="color:green; text-align: center;">Congrats!</h3></div>' +
-                '<div class="col-sm-3"><button type="button" class="btn btn-success float-right" id="next-level">Next Level</button></div>' +
+                '<div class="col-3 col-sm-3"><button type="button" class="btn btn-info" id="give-up">Home</button></div>' +
+                '<div class="col-6 col-sm-6"><h3 style="color:green; text-align: center;">Congrats!</h3></div>' +
+                '<div class="col-3 col-sm-3"><button type="button" class="btn btn-success float-right" id="next-level">Next Level</button></div>' +
             '</div>';
 
         $('#question-image').find('img').attr('src', questionInfo.result.imageUrl);
@@ -73,9 +75,9 @@ $("#check-answer").on("click", '#submit-answer', async function() {
     }
     else {
         answerResult = '<div class="row" id="correct-answer">' +
-            '<div class="col-sm-3"><button type="button" class="btn btn-info" id="give-up">Home</button></div>' +
-            '<div class="col-sm-6"><h3 style="color:red; text-align: center;">Incorrect answer!</h3></div>' +
-            '<div class="col-sm-3"><button type="button" class="btn btn-success float-right" id="tray-again">Tray again</button></div>' +
+            '<div class="col-3 col-sm-3"><button type="button" class="btn btn-info" id="give-up">Home</button></div>' +
+            '<div class="col-6 col-sm-6"><h3 style="color:red; text-align: center;">Incorrect answer!</h3></div>' +
+            '<div class="col-3 col-sm-3"><button type="button" class="btn btn-success float-right" id="tray-again">Tray again</button></div>' +
             '</div>';
     }
 
