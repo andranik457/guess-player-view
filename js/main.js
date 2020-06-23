@@ -4,6 +4,8 @@
 
 let currentQuestionId = '';
 let pastQuestions = [];
+let possibleHints = 0;
+let currentShape = null;
 
 $('#question-image').hide();
 $('#question-answer').hide();
@@ -25,20 +27,38 @@ $( document ).ready(async function() {
 async function appendQuestion(currentLevel) {
     let question = await getQuestion(currentLevel);
 
-    currentQuestionId = ''+ question.questionId;
-    // pastQuestions.push(currentQuestionId);
+    if (Object.keys(question).length === 0 && question.constructor === Object) {
+        $('#question-image')
+            .empty()
+            .append('<h2 style="color: green; text-align: center">Congrats!!!</h2><h3 style="color: green; text-align: center">We are working to create new levels. Come back soon:)</h3>');
 
-    $('#question-image')
-        .empty()
-        .append('<img class="col-sm-12 img-rounded" src="'+ question.questionImageUrl +'"/>');
+        $('#question-header').hide();
+        $('#question-answer').hide();
+        $('#answer-result').hide();
+    }
+    else {
+        currentQuestionId = ''+ question.questionId;
+        possibleHints = question.possibleHintsCount;
+        currentShape = question.shape;
 
-    $('#question-answer')
-        .empty()
-        .append('<input type="text" class="form-control" id="answer-input" autocomplete="off">');
+        $('#question-image')
+            .empty()
+            .append('<img class="col-sm-12 img-rounded" src="'+ question.questionImageUrl +'"/>');
 
-    $('#question-image').show();
-    $('#question-answer').show();
-    $('#answer-result').hide();
+        $('#question-answer')
+            .empty()
+            .append('<input type="text" class="form-control" id="answer-input" autocomplete="off">');
+
+        if (possibleHints > 0) {
+            $('#question-header')
+                .empty()
+                .append('<button type="button" class="btn btn-info" onClick="appendEasyHintData()">Hint</button>');
+        }
+
+        $('#question-image').show();
+        $('#question-answer').show();
+        $('#answer-result').hide();
+    }
 
 
     // catch answer-input area change event
@@ -52,10 +72,20 @@ async function appendQuestion(currentLevel) {
 
 }
 
+async function appendEasyHintData() {
+    const easyImage = await hintEasyImage();
 
+    possibleHints = easyImage.possibleHintsCount;
 
+    $('#question-image')
+        .empty()
+        .append('<img class="col-sm-12 img-rounded" src="'+ easyImage.imageUrl +'"/>');
 
+    if (possibleHints === 0) {
+        $('#question-header').empty();
+    }
 
+}
 
 $("#check-answer").on("click", '#submit-answer', async function() {
     let answer = $('#answer-input').val();
@@ -96,6 +126,13 @@ $("#check-answer").on("click", '#submit-answer', async function() {
         .empty()
         .hide();
 
+});
+
+$("#answer-suggestions").mouseover(function() {
+    $('#answer-input').blur();
+});
+$("#answer-suggestions").mouseout(function() {
+    $('#answer-input').focus();
 });
 
 /**
@@ -220,4 +257,25 @@ async function getQuestion(level) {
     return question;
 }
 
+/**
+ *
+ * @returns {Promise<*>}
+ */
+async function hintEasyImage() {
+    let url = "http://local-guess-player.com/backend/hint/easy-image/"+ currentQuestionId +"/"+ currentShape +"/"+ possibleHints;
 
+    let hintData = null;
+
+    $.ajax({
+        url: url,
+        global: false,
+        type: 'GET',
+        data: null,
+        async: false,
+        success: function (data) {
+            hintData = data.result;
+        }
+    });
+
+    return hintData;
+}
